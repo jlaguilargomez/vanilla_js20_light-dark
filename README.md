@@ -2,7 +2,7 @@
 
 Light and dark mode project from "JS 20 projects course"
 
-Live project: --- URL ---
+Live project: https://sad-kare-aa9564.netlify.app/
 
 ## ¿De qué va esto?
 
