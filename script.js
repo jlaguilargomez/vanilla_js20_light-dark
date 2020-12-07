@@ -6,39 +6,44 @@ const image2 = document.getElementById('image2');
 const image3 = document.getElementById('image3');
 const textBox = document.getElementById('text-box');
 
-// Dark mode styles
-function changeToDarkMode() {
-  nav.style.background = 'rgb(0 0 0 / 50%)';
-  textBox.style.background = 'rgb(255 255 255 / 50%)';
-  toggleIcon.children[0].textContent = 'Dark Mode';
-  toggleIcon.children[1].classList.remove('fa-sun');
-  toggleIcon.children[1].classList.add('fa-moon');
-  image1.src = 'img/undraw_proud_coder_dark.svg';
-  image2.src = 'img/undraw_feeling_proud_dark.svg';
-  image3.src = 'img/undraw_conceptual_idea_dark.svg';
+window.addEventListener('load', setDefaultConfig())
+
+function setDefaultConfig() {
+  const themeSelected = localStorage.getItem('theme') || 'light';
+
+  configureStyleMode(themeSelected);
+
+  themeSelected === 'dark' ? document.documentElement.setAttribute('data-theme', 'dark') : document.documentElement.setAttribute('data-theme', 'light');
+
+  themeSelected === 'dark' ? toggleSwitch.checked = 'true' : null;
+
 }
 
-// Light mode styles
-function changeToLightMode() {
-  nav.style.background = 'rgb(255 255 255 / 50%)';
-  textBox.style.background = 'rgb(0 0 0 / 50%)';
-  toggleIcon.children[0].textContent = 'Light Mode';
-  toggleIcon.children[1].classList.remove('fa-moon');
-  toggleIcon.children[1].classList.add('fa-sun');
-  image1.src = 'img/undraw_proud_coder_light.svg';
-  image2.src = 'img/undraw_feeling_proud_light.svg';
-  image3.src = 'img/undraw_conceptual_idea_light.svg';
-}
-
+// Configure aditional styles
 function configureStyleMode(style) {
-  nav.style.background = 'rgb(255 255 255 / 50%)';
-  textBox.style.background = 'rgb(0 0 0 / 50%)';
-  toggleIcon.children[0].textContent = 'Light Mode';
-  toggleIcon.children[1].classList.remove('fa-moon');
-  toggleIcon.children[1].classList.add('fa-sun');
-  image1.src =`img/undraw_proud_coder_light.svg`;
-  image2.src = `img/undraw_feeling_proud_light.svg`;
-  image3.src = `img/undraw_conceptual_idea_light.svg`;
+  changeStyleBackground(nav, style === 'light' ? '255 255 255':'0 0 0')
+  changeStyleBackground(textBox, style === 'light' ? '0 0 0' : '255 255 255');
+
+  toggleIconContent(style);
+
+  changeImgSource(style)
+   
+}
+
+function changeStyleBackground(element, color) {
+  element.style.background = `rgb(${color} / 50%)`;
+}
+
+function toggleIconContent(style) {
+  toggleIcon.children[0].textContent = `${style.charAt(0).toUpperCase() + style.slice(1)} Mode`;
+  style === 'dark' ? toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon') : toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun');
+  
+}
+
+function changeImgSource(style) {
+   image1.src = `img/undraw_proud_coder_${style}.svg`;
+   image2.src = `img/undraw_feeling_proud_${style}.svg`;
+   image3.src = `img/undraw_conceptual_idea_${style}.svg`;
 }
 
 // Switch theme dynamically
@@ -47,11 +52,13 @@ function switchTheme(event) {
 
   if (isChecked) {
     document.documentElement.setAttribute('data-theme', 'dark');
-    changeToDarkMode();
+    configureStyleMode('dark');
+    localStorage.setItem('theme','dark')
     
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
-    changeToLightMode();
+    configureStyleMode('light');
+    localStorage.setItem('theme','light')
 
   }
   
