@@ -2,7 +2,7 @@
 
 Light and dark mode project from "JS 20 projects course"
 
-Live project: https://sad-kare-aa9564.netlify.app/
+Live project: https://jlaguilargomez.github.io/vanilla_js20_light-dark/
 
 ## ¿De qué va esto?
 
